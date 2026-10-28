@@ -314,6 +314,18 @@ export default function City({ slug }) {
         </div>
       </main>
 
+      <button
+        type="button"
+        className="dark floating-create"
+        aria-label="Create an event"
+        aria-haspopup="dialog"
+        title="Create an event"
+        hidden={!!(form || sel || del || rsvpEvent || toast)}
+        onClick={() => setForm({})}
+      >
+        <Icon n="plus" s={24} />
+      </button>
+
       {sel && (
         <Modal cls="nm" onClose={() => setSel(null)}>
           <Note n={sel} full own={own(sel)} city={lab(sel.city || slug)} registered={!!registrations[sel.id]} onRegister={() => register(sel)} />

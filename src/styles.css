@@ -144,3 +144,9 @@ html,body{overflow-x:hidden}
 .event-modal .acts{bottom:-16px;padding:10px 0 0;box-shadow:0 -6px 10px #ffffffed}
 .event-modal input,.event-modal select,.event-modal textarea{scroll-margin-block:16px 80px}
 .unregister{margin-top:16px;color:#8f1d16;min-height:44px;border-color:#d8b8b4}
+
+/* A second entry point to the existing event form. */
+.floating-create{position:fixed;right:max(24px,calc((100vw - 1320px)/2));bottom:max(24px,env(safe-area-inset-bottom));z-index:35;width:56px;height:56px;padding:0;border-radius:50%;justify-content:center;box-shadow:0 3px 12px #0003}
+.floating-create[hidden]{display:none}
+.page:has(.floating-create) .ftr{padding-bottom:88px}
+@media(max-width:600px){.floating-create{width:44px;height:44px;right:max(12px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom))}.floating-create .ic{width:22px;height:22px}.page:has(.floating-create) .ftr{padding-bottom:76px}}
