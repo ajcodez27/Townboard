@@ -253,6 +253,7 @@ export default function City({ slug }) {
           </p>
         </div>
 
+        <p className="filter-hint">Swipe or scroll for more categories <span aria-hidden="true">→</span></p>
         <div className="chips" role="group" aria-label="Filter by category">
           {['All Categories', ...Object.keys(CATS)].map((k) => (
             <button

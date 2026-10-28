@@ -25,5 +25,5 @@ export function Note({n,full,own,city,onOpen,onEdit,onRemove}){
  <div className="nh"><span className="tagc">{n.cat}</span>{own&&<span className="sm you">Your event</span>}</div><h3>{n.title}</h3>
  <p className="meta"><Icon n="calendar" s={14}/>{fD(n.date)}<i className="sep"/><Icon n="clock" s={14}/>{tm}</p><p className="meta"><Icon n="map-pin" s={14}/>{n.place}</p><p className="body">{n.body}</p>
  {full&&<dl><dt>Organizer</dt><dd>{n.org}</dd><dt>Date</dt><dd>{fD(n.date,{weekday:'long',month:'long',day:'numeric',year:'numeric'})}</dd><dt>Time</dt><dd>{tm}</dd><dt>Venue</dt><dd>{n.place}</dd><dt>City</dt><dd>{city}</dd><dt>Category</dt><dd>{n.cat}</dd></dl>}
- <div className="nf"><span>{n.org} · {ago(n.posted)}</span>{!full&&own&&<span className="acts2"><button className="ed" onClick={stop(onEdit)}>Edit</button><button className="rm" onClick={stop(onRemove)}><Icon n="trash-2" s={14}/>Remove</button></span>}
- {!full&&<button className="exp">Expand<Icon n="arrow-up-right" s={14}/></button>}</div></article>}
+ <div className="nf"><span className="event-byline">{n.org} · {ago(n.posted)}</span>{!full&&own&&<span className="acts2"><button className="ed" onClick={stop(onEdit)}>Edit</button><button className="rm" onClick={stop(onRemove)}><Icon n="trash-2" s={14}/>Remove</button></span>}
+ {!full&&<button className="exp" aria-label={`View details for ${n.title}`}>View details<Icon n="arrow-up-right" s={14}/></button>}</div></article>}

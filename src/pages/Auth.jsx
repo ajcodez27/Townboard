@@ -1,26 +1,35 @@
-import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Layout } from '../components.jsx';
 
 export default function Auth() {
   const nav = useNavigate();
   const [sp] = useSearchParams();
-  const [up, setUp] = useState(sp.get('mode') !== 'signin');
+  const up = sp.get('mode') !== 'signin';
   const [f, setF] = useState({ name: '', email: '', pw: '' });
-  const [er, setEr] = useState('');
+  const [er, setEr] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+  useEffect(() => {
+    setEr({});
+    setShowPassword(false);
+  }, [up]);
+
+  const set = (k) => (e) => {
+    setF({ ...f, [k]: e.target.value });
+    setEr((errors) => ({ ...errors, [k]: '' }));
+  };
 
   const sub = (e) => {
     e.preventDefault();
-    if (
-      (up && !f.name.trim()) ||
-      !/\S+@\S+\.\S+/.test(f.email) ||
-      f.pw.length < 6
-    ) {
-      return setEr(
-        'Please enter a valid name, email and a password of 6+ characters.'
-      );
+    const errors = {};
+    if (up && !f.name.trim()) errors.name = 'Enter your name.';
+    if (!/\S+@\S+\.\S+/.test(f.email)) errors.email = 'Enter a valid email address.';
+    if (f.pw.length < 6) errors.pw = 'Use at least 6 characters.';
+    setEr(errors);
+    if (Object.keys(errors).length) {
+      e.currentTarget.elements.namedItem(Object.keys(errors)[0])?.focus();
+      return;
     }
     localStorage.setItem(
       'user',
@@ -30,7 +39,7 @@ export default function Auth() {
   };
 
   return (
-    <Layout title="Sign Up">
+    <Layout title={up ? 'Sign Up' : 'Sign In'}>
       <main className="auth">
         <form className="card" onSubmit={sub} noValidate>
           <h1>{up ? 'Create your account' : 'Welcome back'}</h1>
@@ -41,21 +50,25 @@ export default function Auth() {
           {up && (
             <label className="fld">
               Name
-              <input value={f.name} onChange={set('name')} />
+              <input name="name" autoComplete="name" value={f.name} onChange={set('name')} aria-invalid={!!er.name} aria-describedby={er.name ? 'name-error' : undefined} />
+              {er.name && <em id="name-error" role="alert">{er.name}</em>}
             </label>
           )}
 
           <label className="fld">
             Email
-            <input type="email" value={f.email} onChange={set('email')} />
+            <input name="email" type="email" autoComplete="email" value={f.email} onChange={set('email')} aria-invalid={!!er.email} aria-describedby={er.email ? 'email-error' : undefined} />
+            {er.email && <em id="email-error" role="alert">{er.email}</em>}
           </label>
 
-          <label className="fld">
-            Password
-            <input type="password" value={f.pw} onChange={set('pw')} />
-          </label>
-
-          {er && <em>{er}</em>}
+          <div className="fld">
+            <label htmlFor="password">Password</label>
+            <div className="password-field">
+              <input id="password" name="pw" type={showPassword ? 'text' : 'password'} autoComplete={up ? 'new-password' : 'current-password'} value={f.pw} onChange={set('pw')} aria-invalid={!!er.pw} aria-describedby={er.pw ? 'password-error' : undefined} />
+              <button type="button" className="password-toggle" aria-label={showPassword ? 'Hide password' : 'Show password'} aria-controls="password" onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Hide' : 'Show'}</button>
+            </div>
+            {er.pw && <em id="password-error" role="alert">{er.pw}</em>}
+          </div>
 
           <button className="dark wide">
             {up ? 'Create Account' : 'Sign in'}
@@ -74,16 +87,9 @@ export default function Auth() {
 
           <p className="free">
             {up ? 'Have an account? ' : 'New here? '}
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setUp(!up);
-                setEr('');
-              }}
-            >
+            <Link to={up ? '/signup?mode=signin' : '/signup'}>
               {up ? 'Sign in' : 'Create account'}
-            </a>
+            </Link>
           </p>
         </form>
       </main>

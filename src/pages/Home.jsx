@@ -9,7 +9,7 @@ export default function Home(){const nav=useNavigate(),[q,setQ]=useState(''),[op
  return <Layout title="Home"><main className="hero"><section><p className="eyebrow">Local events!</p><h1>Find local<br/>events nearby.</h1>
  <p className="sub">Discover local events, community meetings, and volunteer opportunities happening in your area.</p>
  <label className="lbl" htmlFor="q">Enter your city</label>
- <div className="sw" ref={sw} onKeyDown={key}><div className="search"><Icon n="search" s={18}/><input id="q" ref={inp} autoComplete="off" value={q} placeholder="Search a city or place, e.g. Suwanee or Piedmont Park" onFocus={()=>setOpen(true)} onChange={e=>{setQ(e.target.value);setOpen(true)}}/>
+ <div className="sw" ref={sw} onKeyDown={key}><div className="search"><Icon n="search" s={18}/><input id="q" ref={inp} autoComplete="off" value={q} placeholder="Search a city or place" onFocus={()=>setOpen(true)} onChange={e=>{setQ(e.target.value);setOpen(true)}}/>
   {q&&<button className="clr" style={{display:'block'}} aria-label="Clear search" onClick={()=>{setQ('');inp.current.focus()}}><Icon n="x"/></button>}</div>
   {open&&<ul className="res">{m.length?m.map(([k,c,h])=><li key={k}><button onClick={()=>go(k)}><Icon n="map-pin" s={18}/><span className="t"><b>{lab(k)}</b><small>{h?`Matched: ${h} · `:''}{c.county} · View local events</small></span><Icon n="arrow-right"/></button></li>):<li className="none">No results for “{q}”. Try Atlanta, Savannah or Suwanee.</li>}</ul>}</div>
  <p className="free">Open to everyone in your community</p></section>
