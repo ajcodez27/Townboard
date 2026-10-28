@@ -1,0 +1,12 @@
+import {CITIES} from './data.js';
+export const ls=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+export const getUid=()=>{let u=ls('uid',null);if(!u){u='u'+Math.random().toString(36).slice(2)+Date.now();localStorage.setItem('uid',JSON.stringify(u))}return u};
+const IC={'map-pin':'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>','calendar':'<path d="M8 2v4M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>','clock':'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>','search':'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>','x':'<path d="M18 6 6 18M6 6l12 12"/>','arrow-up-right':'<path d="M7 7h10v10M7 17 17 7"/>','arrow-right':'<path d="M5 12h14M12 5l7 7-7 7"/>','plus':'<path d="M5 12h14M12 5v14"/>','trash-2':'<path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>','chevron-down':'<path d="m6 9 6 6 6-6"/>','check-circle':'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>','menu':'<path d="M4 6h16M4 12h16M4 18h16"/>'};
+export const Icon=({n,s=16})=><svg className="ic" width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" dangerouslySetInnerHTML={{__html:IC[n]}}/>;
+const pad=n=>String(n).padStart(2,'0');
+export const iso=o=>{const d=new Date();d.setDate(d.getDate()+o);return`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};
+export const fD=(s,o={weekday:'short',month:'short',day:'numeric'})=>new Date(s+'T00:00:00').toLocaleDateString('en-US',o);
+export const fT=t=>{const[h,m]=t.split(':');return`${h%12||12}:${m} ${h<12?'AM':'PM'}`};
+export const ago=ms=>{const m=Math.max(0,Math.round((Date.now()-ms)/6e4));if(m<1)return'Posted just now';if(m<60)return`Posted ${m} minute${m>1?'s':''} ago`;const h=Math.floor(m/60);if(h<24)return`Posted ${h} hour${h>1?'s':''} ago`;const d=Math.floor(h/24);return d===1?'Posted yesterday':`Posted ${d} days ago`};
+export const sorted=Object.entries(CITIES).sort((a,b)=>a[1].name.localeCompare(b[1].name));
+export const lab=k=>CITIES[k].name+', GA';
