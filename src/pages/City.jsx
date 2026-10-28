@@ -138,7 +138,7 @@ function EventForm({ init, onSave, onClose }) {
             Cancel
           </button>
           <button className="dark">
-            {edit ? 'Save Changes' : 'Post Event'}
+            {edit ? 'Save changes' : 'Post event'}
           </button>
         </div>
       </form>
@@ -275,7 +275,6 @@ export default function City({ slug }) {
         <div className="bh">
           <div>
             <h1>The {c.name} board.</h1>
-            <p className="sub">Local plans</p>
           </div>
           <p className="pinned">
             {list.length} event{list.length === 1 ? '' : 's'}{' '}

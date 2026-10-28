@@ -167,3 +167,22 @@ html,body{overflow-x:hidden}
 .upcoming-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:12px;margin-top:auto;font-size:12px;color:var(--mut)}
 @media(min-width:601px) and (max-width:900px){.home-page .hero{grid-template-columns:1fr 1fr;gap:24px;padding:24px}.home-page .hero h1{font-size:36px}.home-page .map{padding:10px}.upcoming-grid{gap:12px}.upcoming-card{padding:16px 14px}.upcoming-card h3{font-size:19px}}
 @media(max-width:600px){.home-page .hero{grid-template-columns:1fr;gap:22px;padding:22px 16px}.home-page .map{max-width:360px;width:100%}.home-page .map svg{max-height:260px}.home-page .lbl{margin-top:20px}.home-upcoming{margin-top:24px}.upcoming-heading{align-items:flex-start;flex-direction:column;gap:8px}.upcoming-heading h2{font-size:24px}.upcoming-grid{grid-template-columns:minmax(0,1fr);gap:12px}.upcoming-card h3{min-height:0}.upcoming-card{padding:16px}.upcoming-region{font-size:12px}}
+
+/* Visual refinement: shared paper details, fewer containers, consistent spacing. */
+.home-page .hero{border-radius:8px}.home-page .hero h1{margin-top:0}
+.home-page .map{border:0;border-radius:0;background:transparent;box-shadow:none}
+.home-page .map .mh{padding-bottom:10px;border-bottom:1px solid #dcd8cb}
+.upcoming-heading{margin-bottom:18px}.home-upcoming{margin-top:32px}
+.upcoming-card{position:relative;background:var(--event-color);border:0;border-radius:4px;padding:28px 20px 18px;box-shadow:0 2px 5px #00000012;gap:10px}
+.upcoming-card:hover{box-shadow:0 4px 10px #0000001c;border:0}
+.upcoming-category{font-size:12px;letter-spacing:.04em}
+.upcoming-card h3{min-height:0;margin-bottom:4px}.upcoming-place{margin-bottom:6px}
+.upcoming-bottom{border-color:#00000018;color:#41413b;font-size:13px;padding-top:12px}
+.card{box-shadow:none;border-radius:8px}.auth,.doc{border-radius:8px}
+.chip.on{box-shadow:none}.search{border-radius:8px}.res{box-shadow:0 4px 12px #00000012}
+.bh{margin-bottom:20px;align-items:baseline}.bh .pinned{margin:0}
+.note .nf{padding-top:12px;gap:8px 12px}.event-byline{display:flex;flex-direction:column;gap:2px;min-height:0;line-height:1.5}
+.event-byline small{font-size:12px;color:#54544d}.nf .exp,.nf .ed,.nf .rm{min-height:44px}
+.nm .event-byline{margin-bottom:2px}.rsvp-button{margin-top:0}
+@media(max-width:900px){.upcoming-card{padding:28px 16px 16px}}
+@media(max-width:600px){.home-page .map{padding:4px 0 0}.home-upcoming{margin-top:28px}.upcoming-card{padding:28px 18px 16px}.bh{gap:8px;margin-bottom:18px}.upcoming-heading{margin-bottom:16px}}

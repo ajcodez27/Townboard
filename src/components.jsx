@@ -10,7 +10,7 @@ function Header({city,onPost}){
  <button className="burger" aria-label="Toggle menu" aria-expanded={open} aria-controls="nav" onClick={()=>setOpen(!open)}><Icon n="menu" s={22}/></button>
  <nav id="nav" className={open?'open':''} aria-label="Main" onClick={e=>e.target.closest('a')&&setOpen(false)}>
   {city&&<span className="sel"><select aria-label="City" value={city} onChange={e=>nav('/city/'+e.target.value)}>{sorted.map(([k])=><option key={k} value={k}>{lab(k)}</option>)}</select><Icon n="chevron-down" s={14}/></span>}
-  <Link to="/" aria-current={cur('/')}>Home</Link><Link to="/signup" aria-current={cur('/signup')}>Create Account</Link><Link to="/signup?mode=signin" aria-current={cur('/signup',1)}>Sign in</Link>
+  <Link to="/" aria-current={cur('/')}>Home</Link><Link to="/signup" aria-current={cur('/signup')}>Create account</Link><Link to="/signup?mode=signin" aria-current={cur('/signup',1)}>Sign in</Link>
   {onPost&&<button className="dark" onClick={()=>{setOpen(false);onPost()}}><Icon n="plus"/>Post an event</button>}</nav></header>}
 export function Layout({title,city,onPost,children}){
  useEffect(()=>{document.title=title+' - My Town Board'},[title]);
@@ -38,5 +38,5 @@ export function Note({n,full,own,city,onOpen,onEdit,onRemove,onRegister,register
  <p className="meta"><Icon n="calendar" s={14}/>{fD(n.date)}<i className="sep"/><Icon n="clock" s={14}/>{tm}</p><p className="meta"><Icon n="map-pin" s={14}/>{n.place}</p><p className="body">{n.body}</p>
  <p className="attendance">{n.requiresRsvp ? (registered ? "You’re registered · RSVP required" : "RSVP required") : "Open to the public · No RSVP needed"}</p>
  {full&&<dl><dt>Organizer</dt><dd>{n.org}</dd><dt>Date</dt><dd>{fD(n.date,{weekday:'long',month:'long',day:'numeric',year:'numeric'})}</dd><dt>Time</dt><dd>{tm}</dd><dt>Venue</dt><dd>{n.place}</dd><dt>City</dt><dd>{city}</dd><dt>Category</dt><dd>{n.cat}</dd></dl>}
- <div className="nf"><span className="event-byline">{n.org} · {ago(n.posted)}</span>{!full&&own&&<span className="acts2"><button className="ed" onClick={stop(onEdit)}>Edit</button><button className="rm" onClick={stop(onRemove)}><Icon n="trash-2" s={14}/>Remove</button></span>}
+ <div className="nf"><span className="event-byline"><span>{n.org}</span><small>{ago(n.posted)}</small></span>{!full&&own&&<span className="acts2"><button className="ed" onClick={stop(onEdit)}>Edit</button><button className="rm" onClick={stop(onRemove)}><Icon n="trash-2" s={14}/>Remove</button></span>}
  {!full&&<button className="exp" aria-label={`View details for ${n.title}`}>View details<Icon n="arrow-up-right" s={14}/></button>}</div>{n.requiresRsvp&&<button type="button" className="dark rsvp-button" onClick={stop(onRegister)}>{registered ? "Update RSVP" : "Register / RSVP"}</button>}</article>}

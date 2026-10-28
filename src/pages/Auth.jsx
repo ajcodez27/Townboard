@@ -44,7 +44,7 @@ export default function Auth() {
         <form className="card" onSubmit={sub} noValidate>
           <h1>{up ? 'Create your account' : 'Welcome back'}</h1>
           <p className="sub">
-            Post events and save your favorite boards. Browsing is always free.
+            Browse events and RSVP without an account.
           </p>
 
           {up && (
@@ -71,7 +71,7 @@ export default function Auth() {
           </div>
 
           <button className="dark wide">
-            {up ? 'Create Account' : 'Sign in'}
+            {up ? 'Create account' : 'Sign in'}
           </button>
 
           <button
@@ -82,7 +82,7 @@ export default function Auth() {
               nav('/');
             }}
           >
-            Continue as Guest
+            Continue as guest
           </button>
 
           <p className="free">
