@@ -1,6 +1,6 @@
-import { useState, useMemo, cloneElement } from 'react';
+import { useState, useMemo, useEffect, cloneElement } from 'react';
 import Rsvp from './Rsvp.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { CITIES, CATS, EV, POSTED } from '../data.js';
 import { Layout, Modal, Toast, Note } from '../components.jsx';
 import { Icon, ls, getUid, iso, sorted, lab } from '../utils.jsx';
@@ -147,6 +147,7 @@ function EventForm({ init, onSave, onClose }) {
 }
 
 export default function City({ slug }) {
+  const location = useLocation();
   const c = CITIES[slug],
     nav = useNavigate(),
     uid = getUid();
@@ -189,6 +190,13 @@ export default function City({ slug }) {
       })),
     [slug]
   );
+
+  useEffect(() => {
+    if (!location.state?.eventId) return;
+    const event = [...mine, ...seed].find(n => n.id === location.state.eventId);
+    if (event) setSel(event);
+    nav(location.pathname, { replace: true, state: null });
+  }, [location.state, location.pathname, mine, seed, nav]);
 
   const own = (n) => !n.seed && (!n.owner || n.owner === uid);
   const reload = () => setMine(ls(key(slug), []));
