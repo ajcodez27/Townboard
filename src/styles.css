@@ -107,3 +107,40 @@ html,body{overflow-x:hidden}
 .rsvp-confirmation>.ic{color:#1f7a3a;margin-bottom:12px}.rsvp-confirmation p{overflow-wrap:anywhere}
 .rsvp-error{color:#b3261e;font-size:13px}.rsvp-modal .acts button{min-height:44px}
 @media(max-width:600px){.rsvp-modal{padding:24px 20px}.rsvp-modal .acts{flex-wrap:wrap}.rsvp-modal .acts button{flex:1;min-width:110px}}
+
+/* Compact create/edit event dialog */
+.modal.event-modal{max-width:720px;padding:24px}
+.event-modal h2{padding-right:32px;margin-bottom:16px}
+.event-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px}
+.event-fields .fld{margin:0;min-width:0;gap:4px}
+.event-fields input,.event-fields select,.event-fields textarea{width:100%;min-width:0;box-sizing:border-box;padding:8px 10px;min-height:44px}
+.event-field-body{grid-column:1/-1}.event-field-body textarea{resize:vertical;min-height:64px}
+.event-modal .rsvp-option{margin:14px 0;padding:10px 12px}.event-modal .rsvp-option small{margin-top:2px}
+.event-modal .acts{margin-top:0}.event-modal .acts button{min-height:44px}
+@media(max-width:600px){.modal.event-modal{padding:18px 16px}.event-modal h2{font-size:22px;margin-bottom:12px}.event-fields{gap:10px 12px}.event-fields .fld{font-size:13px}.event-modal .rsvp-option{margin:12px 0;font-size:13px}.event-modal .rsvp-option small{font-size:12px}}
+@media(max-height:700px){.modal.event-modal{padding:16px}.event-modal h2{margin-bottom:10px}.event-fields{gap:8px 12px}.event-modal .rsvp-option{margin:10px 0;padding:8px 10px}}
+
+/* Responsive and keyboard-accessibility refinements */
+.page>main,.hero>section,.card,.fld,.note{min-width:0}
+.auth{grid-template-columns:minmax(0,1fr)}
+.fld input,.fld select,.fld textarea{min-width:0;max-width:100%;box-sizing:border-box}
+.search input,.sel select{font-size:16px}.res .t{min-width:0;overflow-wrap:anywhere}
+.logo{flex-shrink:0}.burger{flex-shrink:0}
+.x{width:44px;height:44px;justify-content:center;align-items:center;top:4px;right:4px}
+.clr{min-width:44px;min-height:44px}.password-toggle{min-height:44px}
+.ftr a,.links a,.card .free a{display:inline-flex;align-items:center;min-height:44px}
+.ftr div{align-items:center;gap:8px 20px}.doc,.doc p,.modal dd{overflow-wrap:anywhere}
+.modal dl{grid-template-columns:auto minmax(0,1fr)}
+.modal{flex-shrink:0}.ov{overscroll-behavior:contain;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+.modal h2,.nm .note h3{padding-right:32px}.modal.nm .nh{padding-right:24px}
+.event-modal .acts{position:sticky;bottom:-16px;background:#fff;padding:8px 0 0;z-index:1}
+.toast{bottom:max(16px,env(safe-area-inset-bottom));width:max-content;max-width:calc(100% - 24px);overflow-wrap:anywhere}
+@media(max-width:1000px) and (min-width:861px){.hdr nav{gap:0}.hdr nav a{padding:8px}.hdr nav .dark{padding:10px;margin-left:4px}.hdr nav .sel{margin-right:4px}}
+@media(max-width:600px){.hero{gap:24px}.auth{padding:24px 12px}.card{padding:22px 16px}.bh{gap:0}.pinned{margin-top:0}.ftr{gap:4px}.hdr nav{max-height:calc(100dvh - 88px);overflow-y:auto}.event-fields input[type="date"],.event-fields input[type="time"]{padding-inline:4px}.nf{grid-template-columns:minmax(0,1fr) auto}}
+@media(max-width:360px){.event-fields{grid-template-columns:minmax(0,1fr)}.event-modal .acts{bottom:-16px}.nm .note{padding:28px 16px 16px}.modal dl{grid-template-columns:1fr;gap:2px}.modal dd{margin-bottom:8px}.nf .acts2{grid-column:1/-1}.nf .acts2+.exp{grid-row:3}.map{padding:10px}.hero{padding:20px 12px}}
+@media(hover:none){.note:hover{transform:none}.dark:hover{transform:none}.exp,.rm,.ed{min-height:44px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.modal.event-modal{max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+.event-modal .acts{bottom:-16px;padding:10px 0 0;box-shadow:0 -6px 10px #ffffffed}
+.event-modal input,.event-modal select,.event-modal textarea{scroll-margin-block:16px 80px}
+.unregister{margin-top:16px;color:#8f1d16;min-height:44px;border-color:#d8b8b4}

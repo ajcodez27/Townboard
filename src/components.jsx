@@ -1,7 +1,8 @@
-import {useEffect,useRef,useState} from 'react';import {Link,useLocation,useNavigate} from 'react-router-dom';
+import {useEffect,useRef,useState,useId} from 'react';import {Link,useLocation,useNavigate} from 'react-router-dom';
 import {CATS} from './data.js';import {Icon,sorted,lab,fD,fT,ago} from './utils.jsx';
 function Header({city,onPost}){
  const [open,setOpen]=useState(false),nav=useNavigate(),{pathname,search}=useLocation(),ref=useRef();
+ useEffect(()=>setOpen(false),[pathname,search]);
  useEffect(()=>{const h=e=>{if(!ref.current?.contains(e.target))setOpen(false)},k=e=>e.key==='Escape'&&setOpen(false);
   document.addEventListener('click',h);document.addEventListener('keydown',k);return()=>{document.removeEventListener('click',h);document.removeEventListener('keydown',k)}},[]);
  const cur=(p,s)=>pathname===p&&(s?search.includes('signin'):!search.includes('signin'))?'page':undefined;
@@ -16,8 +17,19 @@ export function Layout({title,city,onPost,children}){
  return <div className="page"><Header city={city} onPost={onPost}/>{children}
  <footer className="ftr"><span>Connecting neighbors with local events.</span><div><Link to="/guidelines">Community guidelines</Link><Link to="/privacy">Privacy</Link><span>© 2026 My Town Board</span></div></footer></div>}
 export function Modal({onClose,cls='',children}){
- useEffect(()=>{const k=e=>e.key==='Escape'&&onClose();document.addEventListener('keydown',k);return()=>document.removeEventListener('keydown',k)},[onClose]);
- return <div className="ov" onClick={e=>e.target===e.currentTarget&&onClose()}><div className={'modal '+cls} role="dialog" aria-modal="true"><button className="x" aria-label="Close" onClick={onClose}><Icon n="x" s={18}/></button>{children}</div></div>}
+ const dialog=useRef(),previousFocus=useRef(document.activeElement),close=useRef(onClose),headingId=useId();close.current=onClose;
+ useEffect(()=>{const heading=dialog.current.querySelector('h2,h3');if(heading)heading.id=headingId;});
+ useEffect(()=>{
+  const previous=previousFocus.current,overflow=document.body.style.overflow,rootOverflow=document.documentElement.style.overflow;
+  document.body.style.overflow='hidden';
+  document.documentElement.style.overflow='hidden';
+  const heading=dialog.current.querySelector('h2,h3');if(heading)heading.id=headingId;
+  const focusable=()=>[...dialog.current.querySelectorAll('button,input,select,textarea,a[href],[tabindex="0"]')].filter(el=>!el.disabled&&el.getClientRects().length);
+  if(!dialog.current.contains(document.activeElement))(dialog.current.querySelector('input,select,textarea')||focusable()[0]||dialog.current).focus();
+  const k=e=>{if(e.key==='Escape'){e.preventDefault();close.current();}if(e.key==='Tab'){const items=focusable(),first=items[0],last=items[items.length-1];if(!first){e.preventDefault();return;}if(e.shiftKey&&(document.activeElement===first||!dialog.current.contains(document.activeElement))){e.preventDefault();last.focus();}else if(!e.shiftKey&&(document.activeElement===last||!dialog.current.contains(document.activeElement))){e.preventDefault();first.focus();}}};
+  document.addEventListener('keydown',k);return()=>{document.body.style.overflow=overflow;document.documentElement.style.overflow=rootOverflow;document.removeEventListener('keydown',k);if(previous?.isConnected)previous.focus({preventScroll:true});};
+ },[headingId]);
+ return <div className="ov" onClick={e=>e.target===e.currentTarget&&onClose()}><div ref={dialog} tabIndex={-1} className={'modal '+cls} role="dialog" aria-modal="true" aria-labelledby={headingId}><button className="x" aria-label="Close" onClick={onClose}><Icon n="x" s={18}/></button>{children}</div></div>}
 export const Toast=({t})=>t&&<div className={'toast '+t.t} role="status"><Icon n={t.ic} s={18}/>{t.m}</div>;
 export function Note({n,full,own,city,onOpen,onEdit,onRemove,onRegister,registered}){
  const tm=fT(n.time)+(n.end?' – '+fT(n.end):''),stop=f=>e=>{e.stopPropagation();f&&f()};

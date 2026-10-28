@@ -2,10 +2,19 @@ import { useState } from 'react';
 import { Modal } from '../components.jsx';
 import { Icon, fD, fT } from '../utils.jsx';
 
-export default function Rsvp({ event, existing, onSave, onClose }) {
+export default function Rsvp({ event, existing, onSave, onRemove, onClose }) {
   const [form, setForm] = useState(existing || { name: '', contact: '', guests: '0' });
   const [errors, setErrors] = useState({});
   const [confirmed, setConfirmed] = useState(false);
+  const [removed, setRemoved] = useState(false);
+  const unregister = () => {
+    try {
+      onRemove();
+      setRemoved(true);
+    } catch {
+      setErrors({ save: 'Your RSVP could not be removed. Please try again.' });
+    }
+  };
   const change = (key) => (e) => {
     setForm({ ...form, [key]: e.target.value });
     setErrors({ ...errors, [key]: '' });
@@ -36,7 +45,13 @@ export default function Rsvp({ event, existing, onSave, onClose }) {
     {errors[key] && <em id={`rsvp-${key}-error`} role="alert">{errors[key]}</em>}
   </label>;
   return <Modal cls="rsvp-modal" onClose={onClose}>
-    {confirmed ? <section className="rsvp-confirmation" role="status">
+    {removed ? <section className="rsvp-confirmation" role="status">
+      <Icon n="check-circle" s={32} />
+      <h2>You're unregistered</h2>
+      <p>Your RSVP for <strong>{event.title}</strong> has been removed, including any guests.</p>
+      <p className="rsvp-hint">Changed your mind? You can register again from the event board.</p>
+      <button className="dark wide" onClick={onClose}>Done</button>
+    </section> : confirmed ? <section className="rsvp-confirmation" role="status">
       <Icon n="check-circle" s={32} />
       <h2>You're registered!</h2>
       <p>Thanks, {form.name.trim()}. Your RSVP for <strong>{event.title}</strong> is saved for you{Number(form.guests) > 0 ? ` and ${form.guests} guest${Number(form.guests) === 1 ? '' : 's'}` : ''}.</p>
@@ -51,6 +66,7 @@ export default function Rsvp({ event, existing, onSave, onClose }) {
       <p id="guest-hint" className="rsvp-hint">Do not count yourself. Choose 0 if you're coming on your own.</p>
       {errors.save && <p className="rsvp-error" role="alert">{errors.save}</p>}
       <div className="acts"><button type="button" className="ghost" onClick={onClose}>Cancel</button><button className="dark">{existing ? 'Save RSVP' : 'Confirm RSVP'}</button></div>
+      {existing && <button type="button" className="ghost wide unregister" onClick={unregister}>Unregister from event</button>}
     </form>}
   </Modal>;
 }

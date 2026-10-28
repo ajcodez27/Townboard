@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, cloneElement } from 'react';
 import Rsvp from './Rsvp.jsx';
 import { useNavigate } from 'react-router-dom';
 import { CITIES, CATS, EV, POSTED } from '../data.js';
@@ -54,7 +54,10 @@ function EventForm({ init, onSave, onClose }) {
     }
 
     setEr(x);
-    if (Object.keys(x).length) return;
+    if (Object.keys(x).length) {
+      e.currentTarget.elements.namedItem(Object.keys(x)[0])?.focus();
+      return;
+    }
 
     onSave(
       {
@@ -74,10 +77,10 @@ function EventForm({ init, onSave, onClose }) {
   };
 
   const F = (k, l, el) => (
-    <label className="fld">
+    <label className={`fld event-field-${k}`} htmlFor={`event-${k}`}>
       {l}
-      {el}
-      {er[k] && <em>{er[k]}</em>}
+      {cloneElement(el, { id: `event-${k}`, name: k, 'aria-invalid': !!er[k], 'aria-describedby': er[k] ? `event-${k}-error` : undefined })}
+      {er[k] && <em id={`event-${k}-error`} role="alert">{er[k]}</em>}
     </label>
   );
 
@@ -86,10 +89,11 @@ function EventForm({ init, onSave, onClose }) {
   );
 
   return (
-    <Modal onClose={onClose}>
+    <Modal cls="event-modal" onClose={onClose}>
       <form className="form" onSubmit={submit} noValidate>
         <h2>{edit ? 'Edit event' : 'Create new event'}</h2>
 
+        <div className="event-fields">
         {F('title', 'Event name', inp('title'))}
         {F(
           'cat',
@@ -102,10 +106,8 @@ function EventForm({ init, onSave, onClose }) {
           </select>
         )}
 
-        <div className="two">
           {F('date', 'Date', inp('date', 'date', edit ? {} : { min: iso(0) }))}
           {F('time', 'Start time', inp('time', 'time'))}
-        </div>
 
         {F('end', 'End time (optional)', inp('end', 'time'))}
         {F(
@@ -126,8 +128,9 @@ function EventForm({ init, onSave, onClose }) {
           'Venue or address',
           inp('place', 'text', { placeholder: 'e.g. Town Center Park' })
         )}
-        {F('body', 'Description', <textarea rows="3" value={f.body} onChange={set('body')} />)}
         {F('org', 'Organizer', inp('org'))}
+        {F('body', 'Description', <textarea rows="2" value={f.body} onChange={set('body')} />)}
+        </div>
         <label className="rsvp-option"><input type="checkbox" checked={!!f.requiresRsvp} onChange={(e) => setF({ ...f, requiresRsvp: e.target.checked })} /><span><strong>Require registration / RSVP</strong><small>Guests register before attending. Leave unchecked for an open public event.</small></span></label>
 
         <div className="acts">
@@ -159,6 +162,12 @@ export default function City({ slug }) {
   const register = (event) => { setSel(null); setRsvpEvent(event); };
   const saveRsvp = (details) => {
     const next = { ...registrations, [rsvpEvent.id]: details };
+    localStorage.setItem('event-rsvps:' + uid, JSON.stringify(next));
+    setRegistrations(next);
+  };
+  const removeRsvp = () => {
+    const next = { ...registrations };
+    delete next[rsvpEvent.id];
     localStorage.setItem('event-rsvps:' + uid, JSON.stringify(next));
     setRegistrations(next);
   };
@@ -311,7 +320,7 @@ export default function City({ slug }) {
         </Modal>
       )}
 
-      {rsvpEvent && <Rsvp key={rsvpEvent.id} event={rsvpEvent} existing={registrations[rsvpEvent.id]} onSave={saveRsvp} onClose={() => setRsvpEvent(null)} />}
+      {rsvpEvent && <Rsvp key={rsvpEvent.id} event={rsvpEvent} existing={registrations[rsvpEvent.id]} onSave={saveRsvp} onRemove={removeRsvp} onClose={() => setRsvpEvent(null)} />}
 
       {form && (
         <EventForm
