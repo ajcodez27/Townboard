@@ -10,21 +10,21 @@ suwanee:[
 ['Music & Entertainment','Live Music on the Lawn',4,'18:00','Town Center Park','Lawn Sessions Series','An evening set from a local acoustic trio. Bring chairs and blankets food trucks on site.'],
 ['Volunteering','Greenway Trail Cleanup',5,'09:00','Suwanee Creek Greenway','Greenway Friends','Help clear litter and trim back bushes along the creek trail. Gloves, bags and water provided.'],
 ['Family & Kids','Outdoor Movie Night',6,'19:30','Settles Bridge Park','Parks Volunteer Group','A family-friendly film on a big inflatable screen.'],
-['Education','Intro to Python Workshop',8,'18:30','Suwanee Public Library','CoderMax Code Club','A beginner session for adults and teens. Bring a laptop no experience needed.'],
-['Sports & Recreation','Youth Soccer Skills Clinic',9,'10:00','George Pierce Park','Suwanee Youth Soccer Club','Drills and games for ages 8 to 12. Cleats and shin guards recommended.']],
+['Education','Intro to Python Workshop',8,'18:30','Suwanee Public Library','CoderMax Code Club','A beginner session for adults and teens. Bring a laptop no experience needed.',true],
+['Sports & Recreation','Youth Soccer Skills Clinic',9,'10:00','George Pierce Park','Suwanee Youth Soccer Club','Drills and games for ages 8 to 12. Cleats and shin guards recommended.',true]],
 atlanta:[
 ['Food & Drink','Westside Food Drive',2,'10:00','Westside Community Center','Atlanta Food Pantry','Drop off canned goods, rice and pantry items. Volunteers are welcome to help sort.'],
 ['Festivals & Markets','Piedmont Park Arts Market',4,'11:00','Piedmont Park','Piedmont Makers Club','Local artists selling prints, ceramics and jewelry, with live demos through the afternoon.'],
-['Community','Small Business Networking',5,'18:00','Old Fourth Ward Community Hall','Atlanta Small Business Network','Meet local owners and CEOs over coffee.'],
+['Community','Small Business Networking',5,'18:00','Old Fourth Ward Community Hall','Atlanta Small Business Network','Meet local owners and CEOs over coffee.',true],
 ['Music & Entertainment','Jazz in the Park',7,'17:30','Grant Park','Southside Jazz Collective','A free outdoor performance from a local band, lawn seating'],
-['Education','Build Your First Website',9,'18:30','Atlanta-Fulton Central Library','Atlanta Tech Learners','A class covering HTML and CSS basics for beginners.'],
+['Education','Build Your First Website',9,'18:30','Atlanta-Fulton Central Library','Atlanta Tech Learners','A class covering HTML and CSS basics for beginners.',true],
 ['Volunteering','Beltline Cleanup Day',10,'09:00','Beltline Trail','Beltline Neighbors','Pick up litter and plant native flowers along the trail.']],
 savannah:[
 ['Festivals & Markets','Forsyth Park Farmers Market',3,'09:00','Forsyth Park','Forsyth Market Volunteers','Fresh produce, flowers and baked goods under the oaks, with live music until noon.'],
 ['Music & Entertainment','Riverfront Live Music',4,'18:30','River Street Plaza','Coastal Sound Series','Local bands on the riverfront stage. Food and drinks available from nearby vendors.'],
-['Family & Kids','Storytime and Craft Hour',5,'10:30','Bull Street Library','Chatham Library Friends','Picture books and a simple craft for ages 3 to 7. Caregivers stay with children.'],
+['Family & Kids','Storytime and Craft Hour',5,'10:30','Bull Street Library','Chatham Library Friends','Picture books and a simple craft for ages 3 to 7. Caregivers stay with children.',true],
 ['Sports & Recreation','Daffin Park Fun Run',6,'08:00','Daffin Park','Coastal Runners Club','A 5K for all paces with a shorter walking loop. Water and fruit at the finish.'],
 ['Volunteering','Shoreline Cleanup Morning',8,'09:00','Tybee Island North Beach','Lowcountry Stewards','Collect debris along the shoreline with a local conservation group. Gloves and bags provided.'],
-['Food & Drink','Low Country Oyster Roast',10,'17:00','Starland District','Savannah Neighborhood Fund','A seasonal oyster roast with live music. Proceeds support local after-school programs.']]};
+['Food & Drink','Low Country Oyster Roast',10,'17:00','Starland District','Savannah Neighborhood Fund','A seasonal oyster roast with live music. Proceeds support local after-school programs.',true]]};
 export const DOCS={guidelines:['Community Guidelines',[['Be kind and respectful','Treat neighbors the way you would in person. Harassment, hate and personal attacks are removed.'],['Post real, local events','Events should be happening in or near the city board where they are posted.'],['Keep it safe and legal','No illegal activity, scams, or events that put people at risk.'],['Be accurate','Include a clear name, date, time and organizer so neighbors know what to expect.'],['Moderation','New events are reviewed before they are published. Repeated violations may lead to removal.']]],
  privacy:['Privacy Policy',[['What we collect','Only what you enter: account details and events you post. Browsing as a guest collects nothing personal.'],['How it is used','To show events on community boards and keep you signed in. We never sell your information.'],['Storage','In this demo, data is kept in your browser\u2019s local storage and can be cleared at any time.'],['Your choices','Use the site as a guest, edit your information, or clear your data whenever you like.'],['Contact','Questions? Reach the My Town Board team through your city\u2019s board.']]]};

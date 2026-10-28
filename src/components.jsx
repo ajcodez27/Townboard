@@ -19,11 +19,12 @@ export function Modal({onClose,cls='',children}){
  useEffect(()=>{const k=e=>e.key==='Escape'&&onClose();document.addEventListener('keydown',k);return()=>document.removeEventListener('keydown',k)},[onClose]);
  return <div className="ov" onClick={e=>e.target===e.currentTarget&&onClose()}><div className={'modal '+cls} role="dialog" aria-modal="true"><button className="x" aria-label="Close" onClick={onClose}><Icon n="x" s={18}/></button>{children}</div></div>}
 export const Toast=({t})=>t&&<div className={'toast '+t.t} role="status"><Icon n={t.ic} s={18}/>{t.m}</div>;
-export function Note({n,full,own,city,onOpen,onEdit,onRemove}){
+export function Note({n,full,own,city,onOpen,onEdit,onRemove,onRegister,registered}){
  const tm=fT(n.time)+(n.end?' – '+fT(n.end):''),stop=f=>e=>{e.stopPropagation();f&&f()};
  return <article className="note" style={{'--c':CATS[n.cat]||CATS.Other}} tabIndex={full?-1:0} onClick={onOpen} onKeyDown={e=>e.key==='Enter'&&e.target===e.currentTarget&&onOpen&&onOpen()}><i className="pin"/>
  <div className="nh"><span className="tagc">{n.cat}</span>{own&&<span className="sm you">Your event</span>}</div><h3>{n.title}</h3>
  <p className="meta"><Icon n="calendar" s={14}/>{fD(n.date)}<i className="sep"/><Icon n="clock" s={14}/>{tm}</p><p className="meta"><Icon n="map-pin" s={14}/>{n.place}</p><p className="body">{n.body}</p>
+ <p className="attendance">{n.requiresRsvp ? (registered ? "You’re registered · RSVP required" : "RSVP required") : "Open to the public · No RSVP needed"}</p>
  {full&&<dl><dt>Organizer</dt><dd>{n.org}</dd><dt>Date</dt><dd>{fD(n.date,{weekday:'long',month:'long',day:'numeric',year:'numeric'})}</dd><dt>Time</dt><dd>{tm}</dd><dt>Venue</dt><dd>{n.place}</dd><dt>City</dt><dd>{city}</dd><dt>Category</dt><dd>{n.cat}</dd></dl>}
  <div className="nf"><span className="event-byline">{n.org} · {ago(n.posted)}</span>{!full&&own&&<span className="acts2"><button className="ed" onClick={stop(onEdit)}>Edit</button><button className="rm" onClick={stop(onRemove)}><Icon n="trash-2" s={14}/>Remove</button></span>}
- {!full&&<button className="exp" aria-label={`View details for ${n.title}`}>View details<Icon n="arrow-up-right" s={14}/></button>}</div></article>}
+ {!full&&<button className="exp" aria-label={`View details for ${n.title}`}>View details<Icon n="arrow-up-right" s={14}/></button>}</div>{n.requiresRsvp&&<button type="button" className="dark rsvp-button" onClick={stop(onRegister)}>{registered ? "Update RSVP" : "Register / RSVP"}</button>}</article>}

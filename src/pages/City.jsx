@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import Rsvp from './Rsvp.jsx';
 import { useNavigate } from 'react-router-dom';
 import { CITIES, CATS, EV, POSTED } from '../data.js';
 import { Layout, Modal, Toast, Note } from '../components.jsx';
@@ -30,6 +31,7 @@ function EventForm({ init, onSave, onClose }) {
     place: '',
     body: '',
     org: '',
+    requiresRsvp: false,
     ...init,
   });
   const [er, setEr] = useState({});
@@ -65,6 +67,7 @@ function EventForm({ init, onSave, onClose }) {
         place: v('place'),
         body: v('body'),
         org: v('org'),
+        requiresRsvp: !!f.requiresRsvp,
       },
       init
     );
@@ -125,6 +128,7 @@ function EventForm({ init, onSave, onClose }) {
         )}
         {F('body', 'Description', <textarea rows="3" value={f.body} onChange={set('body')} />)}
         {F('org', 'Organizer', inp('org'))}
+        <label className="rsvp-option"><input type="checkbox" checked={!!f.requiresRsvp} onChange={(e) => setF({ ...f, requiresRsvp: e.target.checked })} /><span><strong>Require registration / RSVP</strong><small>Guests register before attending. Leave unchecked for an open public event.</small></span></label>
 
         <div className="acts">
           <button type="button" className="ghost" onClick={onClose}>
@@ -150,6 +154,14 @@ export default function City({ slug }) {
   const [form, setForm] = useState(null);
   const [del, setDel] = useState(null);
   const [toast, setToast] = useState(null);
+  const [rsvpEvent, setRsvpEvent] = useState(null);
+  const [registrations, setRegistrations] = useState(() => ls('event-rsvps:' + uid, {}));
+  const register = (event) => { setSel(null); setRsvpEvent(event); };
+  const saveRsvp = (details) => {
+    const next = { ...registrations, [rsvpEvent.id]: details };
+    localStorage.setItem('event-rsvps:' + uid, JSON.stringify(next));
+    setRegistrations(next);
+  };
 
   const seed = useMemo(
     () =>
@@ -162,6 +174,7 @@ export default function City({ slug }) {
         place: e[4],
         org: e[5],
         body: e[6],
+        requiresRsvp: !!e[7],
         posted: Date.now() - POSTED[i] * 6e4,
         seed: 1,
       })),
@@ -276,6 +289,8 @@ export default function City({ slug }) {
                 key={n.id}
                 n={n}
                 own={own(n)}
+                registered={!!registrations[n.id]}
+                onRegister={() => register(n)}
                 onOpen={() => setSel(n)}
                 onEdit={() => setForm({ ...n, city: n.city || slug })}
                 onRemove={() => setDel(n)}
@@ -292,9 +307,11 @@ export default function City({ slug }) {
 
       {sel && (
         <Modal cls="nm" onClose={() => setSel(null)}>
-          <Note n={sel} full own={own(sel)} city={lab(sel.city || slug)} />
+          <Note n={sel} full own={own(sel)} city={lab(sel.city || slug)} registered={!!registrations[sel.id]} onRegister={() => register(sel)} />
         </Modal>
       )}
+
+      {rsvpEvent && <Rsvp key={rsvpEvent.id} event={rsvpEvent} existing={registrations[rsvpEvent.id]} onSave={saveRsvp} onClose={() => setRsvpEvent(null)} />}
 
       {form && (
         <EventForm

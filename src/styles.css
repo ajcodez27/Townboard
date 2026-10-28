@@ -95,3 +95,15 @@ html,body{overflow-x:hidden}
  .filter-hint{display:flex;justify-content:space-between;gap:8px;margin:0 0 6px;color:var(--mut);font-size:13px}
  .nf .exp,.nf .ed,.nf .rm{min-height:44px}
 }
+
+/* Optional event registration */
+.attendance{margin:2px 0 4px;font-size:13px;font-weight:600;line-height:1.5}
+.rsvp-button{width:100%;justify-content:center;min-height:44px;margin-top:4px}
+.rsvp-option{display:flex;align-items:flex-start;gap:10px;padding:14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;margin:4px 0 20px;font-size:14px;cursor:pointer}
+.rsvp-option input{width:18px;height:18px;flex:none;margin:3px 0 0;accent-color:var(--ink)}
+.rsvp-option small{display:block;margin-top:4px;color:var(--mut);font-size:13px;font-weight:400;line-height:1.5}
+.rsvp-modal h2{padding-right:24px}.rsvp-summary{margin:0 0 20px;font-size:15px;line-height:1.6;overflow-wrap:anywhere}
+.rsvp-hint{font-size:13px;color:var(--mut);line-height:1.5;margin:0 0 20px}
+.rsvp-confirmation>.ic{color:#1f7a3a;margin-bottom:12px}.rsvp-confirmation p{overflow-wrap:anywhere}
+.rsvp-error{color:#b3261e;font-size:13px}.rsvp-modal .acts button{min-height:44px}
+@media(max-width:600px){.rsvp-modal{padding:24px 20px}.rsvp-modal .acts{flex-wrap:wrap}.rsvp-modal .acts button{flex:1;min-width:110px}}
